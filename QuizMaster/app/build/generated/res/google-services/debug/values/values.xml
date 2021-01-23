@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">628810346439-47q91b2c85qcg2pd08c29h39mtaap78i.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">628810346439</string>
+    <string name="google_api_key" translatable="false">AIzaSyAJzVaZln4uGdj0OQvOAZ3HO5qKk1rkfvA</string>
+    <string name="google_app_id" translatable="false">1:628810346439:android:151b0e5f56def8a289f3e2</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAJzVaZln4uGdj0OQvOAZ3HO5qKk1rkfvA</string>
+    <string name="google_storage_bucket" translatable="false">quiz-master-ae638.appspot.com</string>
+    <string name="project_id" translatable="false">quiz-master-ae638</string>
+</resources>
