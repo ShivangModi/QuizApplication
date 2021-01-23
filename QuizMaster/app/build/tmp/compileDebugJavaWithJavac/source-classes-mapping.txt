@@ -1,2 +1,0 @@
-com/example/quizmaster/BuildConfig.java
- com.example.quizmaster.BuildConfig
