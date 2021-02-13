@@ -3,8 +3,14 @@ package com.example.quizmaster;
 public class QuestionModel {
 
     private String question,optionA,optionB,optionC,optionD,correctAnswer;
+    private int setNo;
 
-    public QuestionModel(String question, String optionA, String optionB, String optionC, String optionD, String correctAnswer) {
+    public QuestionModel(){
+        //firebase
+    }
+
+    public QuestionModel(int setNo, String question, String optionA, String optionB, String optionC, String optionD, String correctAnswer) {
+        this.setNo = setNo;
         this.question = question;
         this.optionA = optionA;
         this.optionB = optionB;
@@ -59,5 +65,13 @@ public class QuestionModel {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public int getSetNo() {
+        return setNo;
+    }
+
+    public void setSetNo(int setNo) {
+        this.setNo = setNo;
     }
 }

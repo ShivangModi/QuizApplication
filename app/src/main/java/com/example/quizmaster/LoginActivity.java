@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailTextView, passwordTextView;
     private Button Btn;
     private ProgressBar progressbar;
+    private TextView tapHear;
 
     private FirebaseAuth fAuth;
 
@@ -39,6 +40,14 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextView = findViewById(R.id.password_l);
         Btn = findViewById(R.id.login);
         progressbar = findViewById(R.id.progressBarOfLogin);
+        tapHear = findViewById(R.id.tap_hear_to_register);
+
+        tapHear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+            }
+        });
 
         // Set on Click Listener on Sign-in button
         Btn.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                                     .show();
 
                         }
-
 
 
                     }

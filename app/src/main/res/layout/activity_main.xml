@@ -44,7 +44,7 @@
         android:id="@+id/btn_register"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/custom_reg_btn1"
         android:text="Register"
         android:textColor="#FFFFFF"
@@ -55,13 +55,28 @@
 
     <Button
         android:id="@+id/start"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="start"
         app:layout_constraintEnd_toEndOf="@+id/btn_register"
         app:layout_constraintStart_toStartOf="@+id/btn_register"
         app:layout_constraintTop_toBottomOf="@+id/btn_register"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/bookmark"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/login_btn1"
+        android:textSize="18sp"
+        android:translationY="-25dp"
+        android:text="BOOKMARK"
+        android:textColor="@color/app_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:ignore="MissingConstraints" />
 
 
