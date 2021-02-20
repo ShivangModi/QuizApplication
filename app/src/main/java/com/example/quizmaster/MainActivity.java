@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private Button startBtn;
     private Button loginBtn;
     private Button registerBtn;
+    private Button bookmarkBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         startBtn = findViewById(R.id.start);
         loginBtn = findViewById(R.id.btn_login);
         registerBtn = findViewById(R.id.btn_register);
+        bookmarkBtn = findViewById(R.id.bookmark);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Context context = getApplicationContext();
-                CharSequence text = "Hello toast!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();*/
 
                 Intent show = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(show);
@@ -54,16 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                /*Context context = getApplicationContext();
-                CharSequence text = "Hello toast!";
-                int duration = Toast.LENGTH_SHORT;
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+            }
+        });
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();*/
-
-                Intent show = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(show);
+        bookmarkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),BookmarkActivity.class));
             }
         });
     }

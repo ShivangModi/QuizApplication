@@ -25,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button Btn;
     private ProgressBar progressbar;
     private FirebaseAuth fAuth;
+    private TextView tapMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +42,19 @@ public class RegisterActivity extends AppCompatActivity {
         progressbar = findViewById(R.id.progressBar);
         username = findViewById(R.id.username_r);
         phoneNumber = findViewById(R.id.phone_r);
+        tapMe = findViewById(R.id.tap_hear_to_login);
 
-        if(fAuth.getCurrentUser() != null){
+        tapMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            }
+        });
+
+       /* if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
-        }
+        }*/
 
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
