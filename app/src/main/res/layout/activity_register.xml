@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_green"
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:background="@mipmap/i_login_avtar_foreground"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/username_r"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Username"
+        android:paddingLeft="15dp"
+        android:background="@drawable/custom_text_view1"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <EditText
+        android:id="@+id/phone_r"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Mobile Number"
+        android:paddingLeft="15dp"
+        android:background="@drawable/custom_text_view1"
+        app:layout_constraintEnd_toEndOf="@+id/username_r"
+        app:layout_constraintStart_toStartOf="@+id/username_r"
+        app:layout_constraintTop_toBottomOf="@+id/username_r" />
+
+    <EditText
+        android:id="@+id/email_r"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/custom_text_view1"
+        android:hint="Email"
+        android:paddingLeft="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/phone_r"
+        app:layout_constraintStart_toStartOf="@+id/phone_r"
+        app:layout_constraintTop_toBottomOf="@+id/phone_r" />
+
+    <EditText
+        android:id="@+id/password_r"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:paddingLeft="15dp"
+        android:background="@drawable/custom_text_view1"
+        app:layout_constraintEnd_toEndOf="@+id/email_r"
+        app:layout_constraintStart_toStartOf="@+id/email_r"
+        app:layout_constraintTop_toBottomOf="@+id/email_r" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:text="Register"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_reg_btn1"
+        app:layout_constraintEnd_toEndOf="@+id/password_r"
+        app:layout_constraintStart_toStartOf="@+id/password_r"
+        app:layout_constraintTop_toBottomOf="@+id/password_r" />
+
+    <TextView
+        android:id="@+id/tap_hear_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Already have an account ? Login "
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/register"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/register"
+        app:layout_constraintTop_toBottomOf="@+id/register" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/tap_hear_to_login"
+        app:layout_constraintStart_toStartOf="@+id/tap_hear_to_login"
+        app:layout_constraintTop_toBottomOf="@+id/tap_hear_to_login" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
