@@ -25,7 +25,7 @@ public class SetsActivity extends AppCompatActivity {
 
         gridView = findViewById(R.id.gridview);
 
-        GridAdapter adapter = new GridAdapter(getIntent().getIntExtra("sets", 0),getIntent().getStringExtra("title"));
+        GridAdapter adapter = new GridAdapter(getIntent().getIntExtra("sets", 0), getIntent().getStringExtra("title"));
         gridView.setAdapter(adapter);
 
 
@@ -33,7 +33,7 @@ public class SetsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

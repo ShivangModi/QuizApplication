@@ -26,7 +26,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
         return new Viewholder(view);
     }
 
@@ -40,33 +40,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
         return categoryModelList.size();
     }
 
-    class Viewholder extends RecyclerView.ViewHolder{
+    class Viewholder extends RecyclerView.ViewHolder {
 
         private CircleImageView imageView;
         private TextView title;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-
             imageView = itemView.findViewById(R.id.image_view);
             title = itemView.findViewById(R.id.title_text);
         }
 
-        private void setData(String url,final String title,final int sets){
-
+        private void setData(String url, final String title, final int sets) {
             Glide.with(imageView.getContext()).load(url).into(imageView);
             this.title.setText(title);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent setIntent = new Intent(itemView.getContext(),SetsActivity.class);
+                    Intent setIntent = new Intent(itemView.getContext(), SetsActivity.class);
                     setIntent.putExtra("title", title);
                     setIntent.putExtra("sets", sets);
                     itemView.getContext().startActivity(setIntent);
                 }
             });
-
         }
     }
 }

@@ -2,10 +2,10 @@ package com.example.quizmaster;
 
 public class QuestionModel {
 
-    private String question,optionA,optionB,optionC,optionD,correctAnswer;
+    private String question, optionA, optionB, optionC, optionD, correctAnswer;
     private int setNo;
 
-    public QuestionModel(){
+    public QuestionModel() {
         //firebase
     }
 

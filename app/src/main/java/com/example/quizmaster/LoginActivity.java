@@ -45,15 +45,14 @@ public class LoginActivity extends AppCompatActivity {
         tapHear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
 
         // Set on Click Listener on Sign-in button
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String email = emailTextView.getText().toString().trim();
                 String password = passwordTextView.getText().toString().trim();
 
@@ -69,36 +68,25 @@ public class LoginActivity extends AppCompatActivity {
 
                 progressbar.setVisibility(View.VISIBLE);
 
-                //sign in
-
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                //  Sign In
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
                                     "Login successful!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                            // if the user created intent to login activity
-                            startActivity(new Intent(getApplicationContext(),CategoriesActivity.class));
-                        }
-                        else{
+                                    Toast.LENGTH_LONG).show();
 
+                            // if the user created intent to login activity
+                            startActivity(new Intent(getApplicationContext(), CategoriesActivity.class));
+                        } else {
                             Toast.makeText(getApplicationContext(),
                                     "Login failed",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
+                                    Toast.LENGTH_LONG).show();
                         }
-
-
                     }
                 });
-
-
             }
         });
     }
-
 }
