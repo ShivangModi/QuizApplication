@@ -6,7 +6,7 @@ public class CategoryModel {
     private int sets;
     private String url;
 
-    public CategoryModel(){
+    public CategoryModel() {
         //for firebase default use
     }
 
