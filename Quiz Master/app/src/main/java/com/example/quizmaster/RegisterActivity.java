@@ -47,9 +47,14 @@ public class RegisterActivity extends AppCompatActivity {
         tapMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
             }
         });
+
+       /* if(fAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }*/
 
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,24 +87,35 @@ public class RegisterActivity extends AppCompatActivity {
                 progressbar.setVisibility(View.VISIBLE);
 
                 // registration
-                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
                                     "Registration successful!",
-                                    Toast.LENGTH_LONG).show();
-
+                                    Toast.LENGTH_LONG)
+                                    .show();
                             // if the user created intent to login activity
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        }
+                        else{
+
                             Toast.makeText(getApplicationContext(),
                                     "Registration failed",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG)
+                                    .show();
+
                         }
+
                     }
                 });
+
+
             }
         });
+
     }
+
 }
