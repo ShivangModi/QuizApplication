@@ -1,12 +1,11 @@
 package com.example.quizmaster;
 
 public class CategoryModel {
-
     private String name;
     private int sets;
     private String url;
 
-    public CategoryModel(){
+    public CategoryModel() {
         //for firebase default use
     }
 

@@ -8,12 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class GridAdapter extends BaseAdapter {
-
     private int sets = 0;
     private String category;
 
     public GridAdapter(int sets, String category) {
-
         this.sets = sets;
         this.category = category;
     }
@@ -37,23 +35,23 @@ public class GridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
 
-        if (convertView == null){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.set_item,parent,false);
-        }else{
+        if (convertView == null) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.set_item, parent, false);
+        } else {
             view = convertView;
         }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent questionsIntent = new Intent(parent.getContext(),QuestionsActivity.class);
+                Intent questionsIntent = new Intent(parent.getContext(), QuestionsActivity.class);
                 questionsIntent.putExtra("category", category);
-                questionsIntent.putExtra("setNo", position+1);
+                questionsIntent.putExtra("setNo", position + 1);
                 parent.getContext().startActivity(questionsIntent);
             }
         });
 
-        ((TextView)view.findViewById(R.id.textview)).setText(String.valueOf(position+1));
+        ((TextView) view.findViewById(R.id.textview)).setText(String.valueOf(position + 1));
         return view;
     }
 }

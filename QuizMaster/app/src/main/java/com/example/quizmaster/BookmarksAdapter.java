@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.viewholder> {
 
+public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.viewholder> {
     private List<QuestionModel> list;
 
     public BookmarksAdapter(List<QuestionModel> list) {
@@ -22,16 +22,13 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.view
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item,parent,false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item, parent, false);
         return new viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-
-        holder.setData(list.get(position).getQuestion(),list.get(position).getCorrectAnswer(),position);
-
+        holder.setData(list.get(position).getQuestion(), list.get(position).getCorrectAnswer(), position);
     }
 
     @Override
@@ -39,10 +36,9 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.view
         return list.size();
     }
 
-    class viewholder extends RecyclerView.ViewHolder{
-
+    class viewholder extends RecyclerView.ViewHolder {
         private ImageButton deleteBtn;
-        private TextView question,answer;
+        private TextView question, answer;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
@@ -52,7 +48,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.view
             deleteBtn = itemView.findViewById(R.id.delete_btn);
         }
 
-        private void setData(String question,String answer,final int position){
+        private void setData(String question, String answer, final int position) {
             this.question.setText(question);
             this.answer.setText(answer);
 

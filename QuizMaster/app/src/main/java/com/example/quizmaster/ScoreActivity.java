@@ -8,9 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ScoreActivity extends AppCompatActivity {
-
-
-    private TextView scored,total;
+    private TextView scored, total;
     private Button doneBtn;
 
     @Override
@@ -22,8 +20,8 @@ public class ScoreActivity extends AppCompatActivity {
         total = findViewById(R.id.total);
         doneBtn = findViewById(R.id.done_btn);
 
-        scored.setText(String.valueOf(getIntent().getIntExtra("score",0)));
-        total.setText("OUT OF "+String.valueOf(getIntent().getIntExtra("total",0)));
+        scored.setText(String.valueOf(getIntent().getIntExtra("score", 0)));
+        total.setText("OUT OF " + String.valueOf(getIntent().getIntExtra("total", 0)));
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override

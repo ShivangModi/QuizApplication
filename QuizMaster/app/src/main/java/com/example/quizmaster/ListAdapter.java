@@ -10,9 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
-
     private String[] data;
-    public ListAdapter(String[] data){
+
+    public ListAdapter(String[] data) {
         this.data = data;
     }
 
@@ -20,7 +20,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.category_item,parent,false);
+        View view = inflater.inflate(R.layout.category_item, parent, false);
         return new ListViewHolder(view);
     }
 
@@ -35,10 +35,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         return data.length;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder{
-
+    public class ListViewHolder extends RecyclerView.ViewHolder {
         ImageView image_View;
         TextView title_text;
+
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
             image_View = itemView.findViewById(R.id.image_view);
@@ -50,8 +50,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
                 }
             });
-
         }
-
     }
 }

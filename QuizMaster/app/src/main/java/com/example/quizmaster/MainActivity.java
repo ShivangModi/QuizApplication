@@ -12,7 +12,6 @@ import android.widget.Toast;
 import static com.example.quizmaster.R.id.start;
 
 public class MainActivity extends AppCompatActivity {
-
     private Button startBtn;
     private Button loginBtn;
     private Button registerBtn;
@@ -31,18 +30,14 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent show = new Intent(MainActivity.this, CategoriesActivity.class);
                 startActivity(show);
-
-
             }
         });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent show = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(show);
             }
@@ -51,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
 
         bookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),BookmarkActivity.class));
+                startActivity(new Intent(getApplicationContext(), BookmarkActivity.class));
             }
         });
     }

@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private EditText emailTextView, passwordTextView, username, phoneNumber;
     private Button Btn;
     private ProgressBar progressbar;
@@ -47,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         tapMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
 
@@ -87,35 +86,26 @@ public class RegisterActivity extends AppCompatActivity {
                 progressbar.setVisibility(View.VISIBLE);
 
                 // registration
-
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
                                     "Registration successful!",
                                     Toast.LENGTH_LONG)
                                     .show();
-                            // if the user created intent to login activity
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        }
-                        else{
 
+                            // if the user created intent to login activity
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        } else {
                             Toast.makeText(getApplicationContext(),
                                     "Registration failed",
                                     Toast.LENGTH_LONG)
                                     .show();
-
                         }
-
                     }
                 });
-
-
             }
         });
-
     }
-
 }

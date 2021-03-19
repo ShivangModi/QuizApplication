@@ -18,12 +18,10 @@ import java.util.List;
 import static com.example.quizmaster.QuestionsActivity.FILE_NAME;
 import static com.example.quizmaster.QuestionsActivity.KEY_NAME;
 
+
 public class BookmarkActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
-
     private List<QuestionModel> bookmarksList;
-
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Gson gson;
@@ -34,7 +32,6 @@ public class BookmarkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookmark);
 
         recyclerView = findViewById(R.id.rv_bookmark);
-
         preferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
         gson = new Gson();
@@ -46,14 +43,6 @@ public class BookmarkActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layoutManager);
 
-       /* List<QuestionModel> list =  new ArrayList<>();
-        list.add(new QuestionModel(1,"Who is Founder of Tesla?","","","","","Elon Musk"));
-        list.add(new QuestionModel(1,"Who is Founder of Tesla?","","","","","Elon Musk"));
-        list.add(new QuestionModel(1,"Who is Founder of Tesla?","","","","","Elon Musk"));
-        list.add(new QuestionModel(1,"Who is Founder of Tesla?","","","","","Elon Musk"));
-        list.add(new QuestionModel(1,"Who is Founder of Tesla?","","","","","Elon Musk"));
-        list.add(new QuestionModel(1,"Who is Founder of Tesla?","","","","","Elon Musk"));
-*/
         BookmarksAdapter adapter = new BookmarksAdapter(bookmarksList);
         recyclerView.setAdapter(adapter);
     }
@@ -63,23 +52,20 @@ public class BookmarkActivity extends AppCompatActivity {
         storeBookmarks();
     }
 
-    private void getBookmarks(){
-        String json = preferences.getString(KEY_NAME,"");
+    private void getBookmarks() {
+        String json = preferences.getString(KEY_NAME, "");
+        Type type = new TypeToken<List<QuestionModel>>() {
+        }.getType();
+        bookmarksList = gson.fromJson(json, type);
 
-        Type type = new TypeToken<List<QuestionModel>>(){}.getType();
-
-        bookmarksList = gson.fromJson(json,type);
-
-        if (bookmarksList == null){
+        if (bookmarksList == null) {
             bookmarksList = new ArrayList<>();
         }
     }
 
-    private void storeBookmarks(){
+    private void storeBookmarks() {
         String json = gson.toJson(bookmarksList);
-        editor.putString(KEY_NAME,json);
+        editor.putString(KEY_NAME, json);
         editor.commit();
-
     }
-
 }
