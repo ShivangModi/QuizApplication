@@ -51,8 +51,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class QuestionsActivity extends AppCompatActivity {
-
-    private Button add,excel;
+    private Button add, excel;
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private QuestionsAdapter adapter;
@@ -70,21 +69,20 @@ public class QuestionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
         toolbar = findViewById(R.id.toolbar);
-
         myRef = FirebaseDatabase.getInstance().getReference();
 
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading);
         loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
-        loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingDialog.setCancelable(false);
         loadingText = loadingDialog.findViewById(R.id.textView);
 
         setSupportActionBar(toolbar);
 
-        categoryName =  getIntent().getStringExtra("category");
-        set =  getIntent().getIntExtra("setNo",1);
-        getSupportActionBar().setTitle(categoryName+"/set "+set);
+        categoryName = getIntent().getStringExtra("category");
+        set = getIntent().getIntExtra("setNo", 1);
+        getSupportActionBar().setTitle(categoryName + "/set " + set);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         add = findViewById(R.id.add_btn);
@@ -106,17 +104,18 @@ public class QuestionsActivity extends AppCompatActivity {
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                 loadingDialog.show();
+
                                 myRef.child("SETS").child(categoryName).child("questions").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             list.remove(position);
                                             adapter.notifyItemRemoved(position);
-                                        }else{
+                                        } else {
                                             Toast.makeText(QuestionsActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                                         }
+
                                         loadingDialog.dismiss();
                                     }
                                 });
@@ -127,18 +126,18 @@ public class QuestionsActivity extends AppCompatActivity {
                         .show();
             }
         });
+
         //adapter = new QuestionsAdapter(list,categoryName,deleteListner);
         recyclerView.setAdapter(adapter);
 
-
-        getData(categoryName,set);
+        getData(categoryName, set);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addquestion = new Intent(QuestionsActivity.this, AddQuestionActivity.class);
                 addquestion.putExtra("categoryName", categoryName);
-                addquestion.putExtra("setNo",set);
+                addquestion.putExtra("setNo", set);
                 startActivity(addquestion);
             }
         });
@@ -146,75 +145,62 @@ public class QuestionsActivity extends AppCompatActivity {
         excel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(QuestionsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.checkSelfPermission(QuestionsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     selectFile();
-                }else{
-                    ActivityCompat.requestPermissions(QuestionsActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},101);
+                } else {
+                    ActivityCompat.requestPermissions(QuestionsActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
                 }
             }
         });
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 101){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 101) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 selectFile();
-            }else {
+            } else {
                 Toast.makeText(this, "Please Grant Permissions !", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
-    private void selectFile(){
-
+    private void selectFile() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent,"Select File"),102);
-
+        startActivityForResult(Intent.createChooser(intent, "Select File"), 102);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 102){
-            if(resultCode == RESULT_OK){
-
+        if (requestCode == 102) {
+            if (resultCode == RESULT_OK) {
                 String Uri = data.getData().getPath();
                 readFile(data.getData());
-                /*if(1==1)*//*Uri.endsWith(".xlsx"*//*{
-
-                }else{
-                    Toast.makeText(this, "Please Chose Excel file", Toast.LENGTH_SHORT).show();
-                }*/
             }
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
-    private  void getData(String categoryName, int set){
-
+    private void getData(String categoryName, int set) {
         loadingDialog.show();
-        myRef
-                .child("SETS").child(categoryName)
-                .child("questions").orderByChild("setNo")
-                .equalTo(set).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("SETS").child(categoryName).child("questions").orderByChild("setNo").equalTo(set).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 :dataSnapshot.getChildren()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     String id = dataSnapshot1.getKey();
                     String question = dataSnapshot1.child("question").getValue().toString();
                     String a = dataSnapshot1.child("optionA").getValue().toString();
@@ -223,9 +209,9 @@ public class QuestionsActivity extends AppCompatActivity {
                     String d = dataSnapshot1.child("optionD").getValue().toString();
                     String correctANS = dataSnapshot1.child("correctAnswer").getValue().toString();
 
-                    list.add(new QuestionModel(id,question,a,b,c,d,correctANS,set));
-
+                    list.add(new QuestionModel(id, question, a, b, c, d, correctANS, set));
                 }
+
                 loadingDialog.dismiss();
                 adapter.notifyDataSetChanged();
             }
@@ -239,143 +225,137 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    private void readFile(Uri fileUri){
+    private void readFile(Uri fileUri) {
         loadingText.setText("Scanning Question....");
         loadingDialog.show();
 
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
+                HashMap<String, Object> parentMap = new HashMap<>();
+                List<QuestionModel> tempList = new ArrayList<>();
 
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(fileUri);
+                    XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+                    XSSFSheet sheet = workbook.getSheetAt(0);
+                    FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
-        HashMap<String,Object> parentMap = new HashMap<>();
-        List<QuestionModel> tempList = new ArrayList<>();
+                    int rowsCount = sheet.getPhysicalNumberOfRows();
 
-        try {
-            InputStream inputStream = getContentResolver().openInputStream(fileUri);
-            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-            XSSFSheet sheet = workbook.getSheetAt(0);
-            FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
+                    if (rowsCount > 0) {
+                        for (int r = 0; r < rowsCount; r++) {
+                            Row row = sheet.getRow(r);
 
-            int rowsCount = sheet.getPhysicalNumberOfRows();
+                            if (row.getPhysicalNumberOfCells() == CELL_COUNT) {
+                                String question = getCellData(row, 0, formulaEvaluator);
+                                String a = getCellData(row, 1, formulaEvaluator);
+                                String b = getCellData(row, 2, formulaEvaluator);
+                                String c = getCellData(row, 3, formulaEvaluator);
+                                String d = getCellData(row, 4, formulaEvaluator);
+                                String correctAns = getCellData(row, 5, formulaEvaluator);
 
-            if (rowsCount > 0){
-                for (int r = 0; r < rowsCount; r++){
-                    Row row = sheet.getRow(r);
+                                if (correctAns.equals(a) || correctAns.equals(b) || correctAns.equals(c) || correctAns.equals(d)) {
+                                    HashMap<String, Object> questionMap = new HashMap<>();
+                                    questionMap.put("question", question);
+                                    questionMap.put("optionA", a);
+                                    questionMap.put("optionB", b);
+                                    questionMap.put("optionC", c);
+                                    questionMap.put("optionD", d);
+                                    questionMap.put("correctAnswer", correctAns);
+                                    questionMap.put("setNo", set);
 
-                    if (row.getPhysicalNumberOfCells() == CELL_COUNT){
+                                    String id = UUID.randomUUID().toString();
 
-                        String question = getCellData(row,0,formulaEvaluator);
-                        String a = getCellData(row,1,formulaEvaluator);
-                        String b = getCellData(row,2,formulaEvaluator);
-                        String c = getCellData(row,3,formulaEvaluator);
-                        String d = getCellData(row,4,formulaEvaluator);
-                        String correctAns = getCellData(row,5,formulaEvaluator);
+                                    parentMap.put(id, questionMap);
 
-                        if (correctAns.equals(a) || correctAns.equals(b) || correctAns.equals(c) || correctAns.equals(d)){
+                                    tempList.add(new QuestionModel(id, question, a, b, c, d, correctAns, set));
+                                } else {
+                                    int finalR = r;
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            loadingText.setText("Loading..");
+                                            loadingDialog.dismiss();
+                                            Toast.makeText(QuestionsActivity.this, "Row no. " + (finalR + 1) + " has no correct option", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                            HashMap<String,Object> questionMap = new HashMap<>();
-                            questionMap.put("question",question);
-                            questionMap.put("optionA",a);
-                            questionMap.put("optionB",b);
-                            questionMap.put("optionC",c);
-                            questionMap.put("optionD",d);
-                            questionMap.put("correctAnswer",correctAns);
-                            questionMap.put("setNo",set);
-
-                            String id = UUID.randomUUID().toString();
-
-                            parentMap.put(id,questionMap);
-
-                            tempList.add(new QuestionModel(id,question,a,b,c,d,correctAns,set));
-                        }else {
-                            int finalR = r;
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    loadingText.setText("Loading..");
-                                    loadingDialog.dismiss();
-                                    Toast.makeText(QuestionsActivity.this, "Row no. "+(finalR +1)+" has no correct option", Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
-                            });
-                            return;
+                            } else {
+                                int finalR1 = r;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        loadingText.setText("Loading..");
+                                        loadingDialog.dismiss();
+                                        Toast.makeText(QuestionsActivity.this, "Row no. " + (finalR1 + 1) + " has incorrect data", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                return;
+                            }
                         }
-                    }else {
-                        int finalR1 = r;
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingText.setText("Uploading...");
+
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("SETS").child(categoryName)
+                                        .child("questions").updateChildren(parentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            list.addAll(tempList);
+                                            adapter.notifyDataSetChanged();
+                                        } else {
+                                            Toast.makeText(QuestionsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                            loadingText.setText("Loading..");
+                                        }
+
+                                        loadingDialog.dismiss();
+                                    }
+                                });
+                            }
+                        });
+                    } else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 loadingText.setText("Loading..");
                                 loadingDialog.dismiss();
-                                Toast.makeText(QuestionsActivity.this, "Row no. "+(finalR1 +1)+" has incorrect data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QuestionsActivity.this, "File is Empty", Toast.LENGTH_SHORT).show();
                             }
                         });
                         return;
                     }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingText.setText("Loading..");
+                            loadingDialog.dismiss();
+                            Toast.makeText(QuestionsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingText.setText("Loading..");
+                            loadingDialog.dismiss();
+                            Toast.makeText(QuestionsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingText.setText("Uploading...");
-
-                        FirebaseDatabase.getInstance().getReference()
-                                .child("SETS").child(categoryName)
-                                .child("questions").updateChildren(parentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    list.addAll(tempList);
-                                    adapter.notifyDataSetChanged();
-                                }else{
-                                    Toast.makeText(QuestionsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                                    loadingText.setText("Loading..");
-                                }
-                                loadingDialog.dismiss();
-                            }
-                        });
-                    }
-                });
-
-
-
-            }else{
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingText.setText("Loading..");
-                        loadingDialog.dismiss();
-                        Toast.makeText(QuestionsActivity.this, "File is Empty", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return;
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loadingText.setText("Loading..");
-                    loadingDialog.dismiss();
-                    Toast.makeText(QuestionsActivity.this, e.getMessage() , Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loadingText.setText("Loading..");
-                    loadingDialog.dismiss();
-                    Toast.makeText(QuestionsActivity.this, e.getMessage() , Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
             }
         });
-
     }
 
     @Override
@@ -384,23 +364,21 @@ public class QuestionsActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private String getCellData(Row row,int cellPosition,FormulaEvaluator formulaEvaluator){
-
+    private String getCellData(Row row, int cellPosition, FormulaEvaluator formulaEvaluator) {
         String value = "";
         Cell cell = row.getCell(cellPosition);
-        switch (cell.getCellType()){
+        switch (cell.getCellType()) {
             case Cell.CELL_TYPE_BOOLEAN:
-                return value+cell.getBooleanCellValue();
+                return value + cell.getBooleanCellValue();
 
             case Cell.CELL_TYPE_NUMERIC:
-                return value+cell.getNumericCellValue();
+                return value + cell.getNumericCellValue();
 
-            case  Cell.CELL_TYPE_STRING:
-                return value+cell.getStringCellValue();
+            case Cell.CELL_TYPE_STRING:
+                return value + cell.getStringCellValue();
 
             default:
                 return value;
         }
-
     }
 }

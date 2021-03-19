@@ -1,8 +1,7 @@
 package com.example.quizmasteradmin;
 
 public class QuestionModel {
-
-    private String id,question,A,B,C,D,answer;
+    private String id, question, A, B, C, D, answer;
     private int set;
 
     public QuestionModel(String id, String question, String a, String b, String c, String d, String answer, int set) {

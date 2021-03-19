@@ -17,17 +17,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
     private EditText emailTextView, passwordTextView;
     private Button Btn;
-
     private FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // taking instance of FirebaseAuth
         fAuth = FirebaseAuth.getInstance();
@@ -37,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         passwordTextView = findViewById(R.id.password);
         Btn = findViewById(R.id.login);
 
-        Intent intent = new Intent(this,CategoryActivity.class);
+        Intent intent = new Intent(this, CategoryActivity.class);
 
-        if(fAuth.getCurrentUser() != null) {
+        if (fAuth.getCurrentUser() != null) {
             startActivity(intent);
             finish();
             return;
@@ -48,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // Set on Click Listener on Sign-in button
         Btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String email = emailTextView.getText().toString().trim();
                 String password = passwordTextView.getText().toString().trim();
 
@@ -64,38 +60,27 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //sign in
-
-                fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
                                     "Login successful!",
                                     Toast.LENGTH_LONG)
                                     .show();
-                            // if the user created intent to login activity
-                            /*startActivity(intent);
-                            finish();*/
-                           startActivity(new Intent(getApplicationContext(),CategoryActivity.class));
-                           finish();
-                        }
-                        else{
 
+                            // if the user created intent to login activity
+                            startActivity(new Intent(getApplicationContext(), CategoryActivity.class));
+                            finish();
+                        } else {
                             Toast.makeText(getApplicationContext(),
                                     "Login failed",
                                     Toast.LENGTH_LONG)
                                     .show();
-
                         }
-
-
                     }
                 });
-
-
             }
         });
-
     }
 }

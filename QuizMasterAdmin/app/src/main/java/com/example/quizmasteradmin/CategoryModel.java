@@ -1,13 +1,12 @@
 package com.example.quizmasteradmin;
 
 public class CategoryModel {
-
     private String name;
     private int sets;
     String key;
     private String url;
 
-    public CategoryModel(){
+    public CategoryModel() {
         //for firebase default use
     }
 

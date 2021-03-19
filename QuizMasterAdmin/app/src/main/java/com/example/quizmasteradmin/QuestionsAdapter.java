@@ -12,24 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Viewholder> {
-
     private List<QuestionModel> list;
     private String category;
     private DeleteListner listner;
 
     public QuestionsAdapter(List<QuestionModel> list, String category, DeleteListner listner) {
-
         this.list = list;
         this.category = category;
         this.listner = listner;
-
     }
 
 
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_item, parent, false);
         return new Viewholder(view);
     }
 
@@ -37,8 +34,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         String question = list.get(position).getQuestion();
         String answer = list.get(position).getAnswer();
-
-        holder.setData(question,answer,position);
+        holder.setData(question, answer, position);
     }
 
     @Override
@@ -46,9 +42,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
         return list.size();
     }
 
-    class Viewholder extends RecyclerView.ViewHolder{
-
-        private TextView question,answer;
+    class Viewholder extends RecyclerView.ViewHolder {
+        private TextView question, answer;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -57,17 +52,17 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
             answer = itemView.findViewById(R.id.answer);
         }
 
-        private void setData(String question,String answer,int position){
-            this.question.setText(position+1+". "+question);
-            this.answer.setText("Ans. "+answer);
+        private void setData(String question, String answer, int position) {
+            this.question.setText(position + 1 + ". " + question);
+            this.answer.setText("Ans. " + answer);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent editIntent = new Intent(itemView.getContext(),AddQuestionActivity.class);
-                    editIntent.putExtra("categoryName",category);
-                    editIntent.putExtra("setNo",list.get(position).getSet());
-                    editIntent.putExtra("position",position);
+                    Intent editIntent = new Intent(itemView.getContext(), AddQuestionActivity.class);
+                    editIntent.putExtra("categoryName", category);
+                    editIntent.putExtra("setNo", list.get(position).getSet());
+                    editIntent.putExtra("position", position);
                     itemView.getContext().startActivity(editIntent);
                 }
             });
@@ -75,15 +70,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    listner.onLongClick(position,list.get(position).getId());
+                    listner.onLongClick(position, list.get(position).getId());
                     return false;
                 }
             });
         }
     }
 
-    public interface DeleteListner{
+    public interface DeleteListner {
         void onLongClick(int position, String id);
     }
-
 }

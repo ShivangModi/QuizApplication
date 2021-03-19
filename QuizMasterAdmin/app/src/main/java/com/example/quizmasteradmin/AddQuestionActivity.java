@@ -23,13 +23,12 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class AddQuestionActivity extends AppCompatActivity {
-
     private EditText question;
     private RadioGroup options;
     private LinearLayout answers;
     private Button uploadBtn;
     private String categoryName;
-    private int setNo,position;
+    private int setNo, position;
     private Dialog loadingDialog;
     private QuestionModel questionModel;
     private String id;
@@ -44,11 +43,10 @@ public class AddQuestionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Question");
 
-
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading);
         loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.rounded_corners));
-        loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        loadingDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         loadingDialog.setCancelable(false);
 
         question = findViewById(R.id.question);
@@ -56,18 +54,16 @@ public class AddQuestionActivity extends AppCompatActivity {
         answers = findViewById(R.id.answers);
         uploadBtn = findViewById(R.id.button);
 
-
         categoryName = getIntent().getStringExtra("categoryName");
         setNo = getIntent().getIntExtra("setNo", -1);
         position = getIntent().getIntExtra("position", -1);
 
-
-        if (setNo == -1){
+        if (setNo == -1) {
             finish();
             return;
         }
 
-        if (position != -1){
+        if (position != -1) {
             questionModel = QuestionsActivity.list.get(position);
             setData();
         }
@@ -76,80 +72,76 @@ public class AddQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(AddQuestionActivity.this, "Processing", Toast.LENGTH_SHORT).show();
-                if (question.getText().toString().isEmpty()){
+                if (question.getText().toString().isEmpty()) {
                     question.setError("Required");
                     return;
                 }
+
                 upload();
             }
         });
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void setData(){
-
+    private void setData() {
         question.setText(questionModel.getQuestion());
 
-        ((EditText)answers.getChildAt(0)).setText(questionModel.getA());
-        ((EditText)answers.getChildAt(1)).setText(questionModel.getB());
-        ((EditText)answers.getChildAt(2)).setText(questionModel.getC());
-        ((EditText)answers.getChildAt(3)).setText(questionModel.getD());
+        ((EditText) answers.getChildAt(0)).setText(questionModel.getA());
+        ((EditText) answers.getChildAt(1)).setText(questionModel.getB());
+        ((EditText) answers.getChildAt(2)).setText(questionModel.getC());
+        ((EditText) answers.getChildAt(3)).setText(questionModel.getD());
 
-        for (int i = 0; i < answers.getChildCount(); i++){
-            if (((EditText)answers.getChildAt(i)).getText().toString().equals(questionModel.getAnswer())){
+        for (int i = 0; i < answers.getChildCount(); i++) {
+            if (((EditText) answers.getChildAt(i)).getText().toString().equals(questionModel.getAnswer())) {
                 RadioButton radioButton = (RadioButton) options.getChildAt(i);
                 radioButton.setChecked(true);
                 break;
             }
         }
-        // error debug
     }
 
-
-    private void upload(){
-
+    private void upload() {
         int correct = -1;
-        for(int i = 0; i < options.getChildCount(); i++){
-
+        for (int i = 0; i < options.getChildCount(); i++) {
             EditText answer = (EditText) answers.getChildAt(i);
-            if (answer.getText().toString().isEmpty()){
+
+            if (answer.getText().toString().isEmpty()) {
                 answer.setError("Required");
                 return;
             }
 
             RadioButton radioButton = (RadioButton) options.getChildAt(i);
-            if (radioButton.isChecked()){
+            if (radioButton.isChecked()) {
                 correct = i;
                 break;
             }
         }
-        if (correct == -1){
+
+        if (correct == -1) {
             Toast.makeText(this, "Please mark Correct Option", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("correctAnswer",((EditText)answers.getChildAt(correct)).getText().toString());
-        map.put("optionD",((EditText)answers.getChildAt(3)).getText().toString());
-        map.put("optionC",((EditText)answers.getChildAt(2)).getText().toString());
-        map.put("optionB",((EditText)answers.getChildAt(1)).getText().toString());
-        map.put("optionA",((EditText)answers.getChildAt(0)).getText().toString());
-        map.put("question",question.getText().toString());
-        map.put("setNo",setNo);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("correctAnswer", ((EditText) answers.getChildAt(correct)).getText().toString());
+        map.put("optionD", ((EditText) answers.getChildAt(3)).getText().toString());
+        map.put("optionC", ((EditText) answers.getChildAt(2)).getText().toString());
+        map.put("optionB", ((EditText) answers.getChildAt(1)).getText().toString());
+        map.put("optionA", ((EditText) answers.getChildAt(0)).getText().toString());
+        map.put("question", question.getText().toString());
+        map.put("setNo", setNo);
 
-        if (position != -1){
+        if (position != -1) {
             id = questionModel.getId();
-        }else{
+        } else {
             id = UUID.randomUUID().toString();
         }
 
@@ -160,28 +152,28 @@ public class AddQuestionActivity extends AppCompatActivity {
                 .setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-
-                    QuestionModel questionModel = new QuestionModel(id,map.get("question").toString(),
+                if (task.isSuccessful()) {
+                    QuestionModel questionModel = new QuestionModel(id, map.get("question").toString(),
                             map.get("optionA").toString(),
                             map.get("optionB").toString(),
                             map.get("optionC").toString(),
                             map.get("optionD").toString(),
                             map.get("correctAnswer").toString(),
-                            (int)map.get("setNo"));
+                            (int) map.get("setNo"));
 
-                    if (position != -1){
-                        QuestionsActivity.list.set(position,questionModel);
-                    }else{
+                    if (position != -1) {
+                        QuestionsActivity.list.set(position, questionModel);
+                    } else {
                         QuestionsActivity.list.add(questionModel);
                     }
+
                     finish();
-                }else{
+                } else {
                     Toast.makeText(AddQuestionActivity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
                 }
+
                 loadingDialog.dismiss();
             }
         });
-
     }
 }
